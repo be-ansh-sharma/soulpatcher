@@ -1,0 +1,22 @@
+{
+  "brandName": "SourPatcher",
+  "brandNameFormatted": "SourPatcher",
+  "items": {
+    "Life Style": {
+      "Truth or Dare": "/lifestyle/truthordare",
+      "Pick Up Lines": "/lifestyle/pickuplines",
+      "Quotes": "/lifestyle/quotes"
+    },
+    "Widgets": {
+      "Water Calculator": "/widgets/watercalculator",
+      "BMI Calculator": "/widgets/bmicalculator",
+      "Secrets in Bottle": "/widgets/secretsinbottle",
+      "Waste Counter": "/widgets/wastecounter"
+    },
+    "Blogs": "/blogs"
+  },
+  "links": {
+    "truthordare": "https://play.google.com/store/apps/details?id=com.epoch.truthordare",
+    "drinkingbuddy": "https://play.google.com/store/apps/details?id=com.epoch.drinkingbuddy"
+  }
+}

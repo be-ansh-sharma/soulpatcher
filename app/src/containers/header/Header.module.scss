@@ -1,0 +1,60 @@
+.container {
+  display: flex;
+  height: var(--main-header-height);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 3;
+  background-color: var(--main-bg-color);
+  box-shadow: var(--main-box-shadow);
+  align-items: center;
+
+  .modewrapper {
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-end;
+    @include respond-to(tablet) {
+      flex-grow: 0;
+    }
+  }
+
+  .bar {
+    margin-left: 1rem;
+    display: flex;
+    flex-grow: 1;
+    @include respond-to(tablet) {
+      display: none;
+      flex-grow: 0;
+    }
+
+    .barIcon {
+      height: 100%;
+      width: 1.5rem;
+    }
+  }
+
+  .heading {
+    font-family: 'Comfortaa';
+    margin: auto;
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+
+    @include respond-to(tablet) {
+      margin: auto 4rem;
+      flex-grow: 0;
+    }
+  }
+
+  .mode {
+    align-self: center;
+    justify-content: flex-end;
+    display: flex;
+    right: 1rem;
+    position: relative;
+
+    @include respond-to(tablet) {
+      margin: auto 1rem;
+    }
+  }
+}

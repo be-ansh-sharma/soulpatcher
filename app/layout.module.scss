@@ -1,0 +1,26 @@
+.container {
+  margin-top: var(--main-header-height);
+  flex-direction: column;
+
+  @include respond-to(tablet) {
+    display: flex;
+  }
+
+
+  .content {
+    min-height: 100vh;
+    position: relative;
+    justify-content: center;
+    background-color: var(--main-bg-color);
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @include respond-to(tablet) {
+      flex-direction: column;
+      align-self: auto;
+      justify-content: flex-start;
+    }
+  }
+}
