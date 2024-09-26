@@ -1,4 +1,16 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+import nextPWA from 'next-pwa';
+const nextConfig = {
+  reactStrictMode: true,
+  swcMinify: true,
+  sassOptions: {
+    additionalData: `@import "src/styles/mixins.scss";`,
+  },
+};
 
-export default nextConfig;
+const withPWA = nextPWA({
+  dest: 'public',
+});
+
+export default withPWA(nextConfig);
+
