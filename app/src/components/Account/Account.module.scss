@@ -1,4 +1,7 @@
 .container {
-  margin-left: auto;
   display: flex;
+
+  .menu {
+    margin-right: 10px;
+  }
 }

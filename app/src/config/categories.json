@@ -1,0 +1,23 @@
+{
+  "widgets": {
+    "title": "Widgets",
+    "description": "Byte sized Apps to change your life",
+    "link": "/widgets",
+    "icon": "FaRobot",
+    "color": "#00B0FF"
+  },
+  "quotes": {
+    "title": "World of Quotes",
+    "description": "Words to change your life",
+    "link": "/quotes",
+    "icon": "TbQuotes",
+    "color": "#00B0FF"
+  },
+  "blogs": {
+    "title": "Random Blogs",
+    "description": "Get Random news, trivias, and facts about lifestyles, games and programming.",
+    "link": "/blogs",
+    "icon": "FcNews",
+    "color": ""
+  }
+}

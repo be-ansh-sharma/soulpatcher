@@ -1,0 +1,26 @@
+{
+  "watercalculator": {
+    "title": "Daily Water Intake Calculator",
+    "description": "Learn how many ml of water you should be drinking!",
+    "link": "/widgets/watercalculator",
+    "type": "widget",
+    "icon": "IoWaterOutline",
+    "color": "#00B0FF"
+  },
+  "bmicalculator": {
+    "title": "Body Mass Index (BMI) Calculator",
+    "description": "Check your Body Mass Index (BMI)",
+    "link": "/widgets/bmicalculator",
+    "type": "widget",
+    "icon": "FaHandHoldingHeart",
+    "color": "#00B0FF"
+  },
+  "wastecounter": {
+    "title": "Waste Counter",
+    "description": "Calculate how much times you have wasted",
+    "link": "/widgets/wastecounter",
+    "type": "widget",
+    "icon": "ImBin2",
+    "color": "#00B0FF"
+  }
+}

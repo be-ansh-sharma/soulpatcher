@@ -1,62 +1,87 @@
-'use client';
 import {
   Button,
   FormControl,
   FormErrorMessage,
   FormLabel,
+  Input,
   InputGroup,
   InputLeftElement,
-} from '@chakra-ui/react';
-import styles from './Login.module.scss';
-import {
   Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
 } from '@chakra-ui/react';
+import styles from './Login.module.scss';
 import { useState } from 'react';
-import { Input } from '@chakra-ui/react';
-import { MdOutlineAlternateEmail } from 'react-icons/md';
 import { IoMdLock } from 'react-icons/io';
 import { COLOR } from 'config/styling';
+import { MdOutlineAlternateEmail } from 'react-icons/md';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import useMetaStore from 'stores/meta';
+import { getUserFromRemote } from 'services/Firestore';
+import { Auth } from 'services/Firebase';
 
 const Login = () => {
   const [open, setOpen] = useState(false);
   const [formField, setFormField] = useState({
-    first: '',
-    last: '',
     email: '',
     password: '',
-    passwordconfirm: '',
   });
   const [formError, setFormError] = useState({
-    first: '',
-    last: '',
     email: '',
     password: '',
-    passwordconfirm: '',
   });
+  const [signInWithEmailAndPassword, user, loading, error] =
+    useSignInWithEmailAndPassword(Auth);
+  const saveUserToStore = useMetaStore((state) => state.setUser);
 
-  const updateField = (type, value) => {
+  const submitHandler = async () => {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const errors = {};
+
+    if (formField.email.length === 0) {
+      errors.email = 'Email is empty';
+    } else if (!emailPattern.test(formField.email)) {
+      errors.email = 'Email format is incorrect';
+    }
+
+    if (formField.password.length === 0) {
+      errors.password = "Password can't be empty";
+    } else if (formField.password.length < 8) {
+      errors.password = 'Password length is too short';
+    }
+
+    // Set errors if any
+    if (Object.keys(errors).length > 0) {
+      setFormError(errors);
+    }
+
+    let result = await signInWithEmailAndPassword(
+      formField.email,
+      formField.password
+    );
+    if (result?.user) {
+      let savedUser = await getUserFromRemote(result.user.uid);
+      saveUserToStore(savedUser);
+    }
+  };
+
+  const updateField = (type, value = '') => {
     let currentFormField = { ...formField };
-    currentFormField[type] = value || '';
 
+    currentFormField[type] = value;
     setFormField(currentFormField);
   };
-
-  const submitHandler = () => {
-    if ()
-  };
-
   return (
-    <div className={styles.container}>
+    <div>
       <Button
         onClick={() => setOpen(true)}
         className={styles.login}
         variant='outline'
+        mr={2}
       >
         Login
       </Button>
@@ -67,30 +92,6 @@ const Login = () => {
           <ModalCloseButton />
           <ModalBody>
             <form>
-              <div className={styles.nameWrapper}>
-                <FormControl id='first-name' mb={4} isInvalid={formError.first}>
-                  <FormLabel>First Name</FormLabel>
-                  <Input
-                    type='text'
-                    value={formField.first}
-                    onChange={(e) => updateField('first', e.target.value)}
-                    placeholder='First Name'
-                  />
-                  <FormErrorMessage>{formError.first}</FormErrorMessage>
-                </FormControl>
-
-                <FormControl id='last-name' mb={4} isInvalid={formError.last}>
-                  <FormLabel>Last Name</FormLabel>
-                  <Input
-                    type='text'
-                    value={formField.last}
-                    onChange={(e) => updateField('last', e.target.value)}
-                    placeholder='Last Name'
-                  />
-                  <FormErrorMessage>{formError.last}</FormErrorMessage>
-                </FormControl>
-              </div>
-
               <FormControl id='email' mb={4} isInvalid={formError.email}>
                 <FormLabel>Email Address</FormLabel>
                 <InputGroup>
@@ -122,34 +123,12 @@ const Login = () => {
                 </InputGroup>
                 <FormErrorMessage>{formError.password}</FormErrorMessage>
               </FormControl>
-
-              <FormControl
-                id='passwordconfirm'
-                mb={4}
-                isInvalid={formError.passwordconfirm}
-              >
-                <FormLabel>Confirm Password</FormLabel>
-                <InputGroup>
-                  <InputLeftElement pointerEvents='none'>
-                    <IoMdLock color={COLOR.faded} />
-                  </InputLeftElement>
-                  <Input
-                    type='password'
-                    value={formField.passwordconfirm}
-                    onChange={(e) =>
-                      updateField('passwordconfirm', e.target.value)
-                    }
-                    placeholder='Confirm Password'
-                  />
-                </InputGroup>
-                <FormErrorMessage>{formError.passwordconfirm}</FormErrorMessage>
-              </FormControl>
             </form>
           </ModalBody>
 
           <ModalFooter>
             <Button colorScheme='blue' mr={3} onClick={submitHandler}>
-              Register
+              Login
             </Button>
           </ModalFooter>
         </ModalContent>

@@ -25,8 +25,7 @@ body {
   scrollbar-width: none;
   background-color: var(--main-bg-color);
   -webkit-font-smoothing: antialiased;
-  overflow-y: hidden; /* Hide vertical scrollbar */
-  overflow-x: hidden; /* Hide horizontal scrollbar */
+ 
 }
 
 body::-webkit-scrollbar {
@@ -45,7 +44,6 @@ div.react-toggle--checked:hover:not(.react-toggle--disabled) .react-toggle-track
 a {
   text-decoration: none;
   text-decoration-color: var(--main-primary-color);
-  color: var(--main-primary-color);
 }
 
 
