@@ -1,11 +1,11 @@
 import dayjs from './dayconfig';
 
-const isBrowser = typeof window !== 'undefined';
-const hasNotifications = isBrowser
+export const isBrowser = typeof window !== 'undefined';
+export const hasNotifications = isBrowser
   ? typeof Notification !== 'undefined'
   : false;
 
-const toSeoUrl = url => {
+export const toSeoUrl = (url) => {
   return url
     .toString() // Convert to string
     .normalize('NFD') // Change diacritics
@@ -19,9 +19,23 @@ const toSeoUrl = url => {
     .replace(/-*$/, ''); // Remove trailing dashes
 };
 
-const transformDate = (date, pattern) => dayjs(date).format(pattern);
+export const cleanQuote = (quote) => {
+  let author =
+    quote.author.toLowerCase() === 'unknown'
+      ? 'anonymous'
+      : toSeoUrl(quote.author);
+  let tags = quote.tags.map((tag) => toSeoUrl(tag));
+  return {
+    ...quote,
+    author,
+    tags,
+    friendlyName: quote.author,
+  };
+};
 
-const transformDoc = doc => {
+export const transformDate = (date, pattern) => dayjs(date).format(pattern);
+
+export const transformDoc = (doc) => {
   if (doc) {
     return {
       ...doc.data(),
@@ -31,7 +45,7 @@ const transformDoc = doc => {
   return null;
 };
 
-const sortByDate = (list, mode) => {
+export const sortByDate = (list, mode) => {
   return [
     ...list.sort(function (a, b) {
       if (mode === 'desc') {
@@ -43,7 +57,7 @@ const sortByDate = (list, mode) => {
   ];
 };
 
-const sortByValue = (list, key, mode) => {
+export const sortByValue = (list, key, mode) => {
   if (mode === 'desc') {
     return [...list.sort((a, b) => b[key] - a[key])];
   } else {
@@ -51,7 +65,7 @@ const sortByValue = (list, key, mode) => {
   }
 };
 
-const shorthandNumber = num => {
+export const shorthandNumber = (num) => {
   return new Intl.NumberFormat('en-US', {
     maximumFractionDigits: 1,
     notation: 'compact',
@@ -59,7 +73,7 @@ const shorthandNumber = num => {
   }).format(num);
 };
 
-const shuffleArray = array => {
+export const shuffleArray = (array) => {
   let currentIndex = array.length,
     randomIndex;
 
@@ -79,8 +93,8 @@ const shuffleArray = array => {
   return array;
 };
 
-const getCategories = (list, type) => {
-  Object.keys(list).map(entry => {
+export const getCategories = (list, type) => {
+  Object.keys(list).map((entry) => {
     if (list[entry].type != type) {
       delete list[entry];
     }
@@ -88,11 +102,11 @@ const getCategories = (list, type) => {
   return list;
 };
 
-const getDiff = (date, mode) => {
+export const getDiff = (date, mode) => {
   return dayjs().diff(date, mode);
 };
 
-const getBirthdayData = date => {
+export const getBirthdayData = (date) => {
   date = dayjs(date);
   return {
     years: getDiff(date, 'year'),
@@ -105,19 +119,19 @@ const getBirthdayData = date => {
   };
 };
 
-const hasNotificationPremission = () =>
+export const hasNotificationPremission = () =>
   hasNotifications ? Notification.permission == 'granted' : false;
 
-const getNotificationPermission = async () => {
+export const getNotificationPermission = async () => {
   if (!hasNotificationPremission()) {
-    return Notification.requestPermission().then(permission => permission);
+    return Notification.requestPermission().then((permission) => permission);
   } else {
     return 'granted';
   }
 };
 
-const sendNotification = () => {
-  navigator.serviceWorker.ready.then(registration => {
+export const sendNotification = () => {
+  navigator.serviceWorker.ready.then((registration) => {
     registration.showNotification('Vibration Sample', {
       body: 'Buzz! Buzz!',
       timestamp: 1676326728068,
@@ -126,20 +140,4 @@ const sendNotification = () => {
       tag: 'vibration-sample',
     });
   });
-};
-
-module.exports = {
-  toSeoUrl,
-  transformDate,
-  transformDoc,
-  sortByDate,
-  sortByValue,
-  shorthandNumber,
-  isBrowser,
-  shuffleArray,
-  getCategories,
-  getBirthdayData,
-  getNotificationPermission,
-  hasNotificationPremission,
-  hasNotifications,
 };

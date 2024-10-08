@@ -1,0 +1,36 @@
+.container {
+  width: 100%;
+
+  .heading {
+    display: flex;
+    font-size: 2rem;
+    justify-content: center;
+  }
+
+  .list {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+
+    .item {
+      margin: 1rem 2rem;
+      display: flex;
+      padding: 1rem 2rem;
+      text-align: center;
+      border-radius: 10px;
+      border: 2px solid var(--main-border-color);
+      transition: all 0.2s ease-in;
+      text-transform: capitalize;
+    
+      &:hover {
+        box-shadow: var(--main-box-shadow);
+        border: 1px solid var(--main-border-hover-color);
+        color: var(--main-primary-color)
+
+      }
+    }
+  }
+
+
+
+}

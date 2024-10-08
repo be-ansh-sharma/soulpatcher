@@ -1,3 +1,4 @@
+'use client';
 import { useEffect, useState } from 'react';
 import {
   getNotificationPermission,
@@ -8,11 +9,11 @@ import styles from './RestReminder.module.scss';
 
 const RestReminder = () => {
   const [haspermission, setHasPersmission] = useState(
-    hasNotificationPremission(),
+    hasNotificationPremission()
   );
   const [errorMessage, setErrorMessage] = useState('');
   useEffect(() => {
-    getNotificationPermission().then(permission => {
+    getNotificationPermission().then((permission) => {
       if (permission === 'granted') {
         setHasPersmission(true);
       }
@@ -21,13 +22,13 @@ const RestReminder = () => {
       setErrorMessage(`Your Browser doesn't support Notifications!`);
     } else if (!haspermission) {
       setErrorMessage(
-        'You need to enable Notifications for this to work. Please enable themfor this to work!',
+        'You need to enable Notifications for this to work. Please enable themfor this to work!'
       );
     }
   }, []);
 
   const clickHandler = () => {
-    navigator.serviceWorker.ready.then(registration => {
+    navigator.serviceWorker.ready.then((registration) => {
       registration.showNotification('Vibration Sample', {
         body: 'Buzz! Buzz!',
         icon: '/icons/android-chrome-192x192.png',

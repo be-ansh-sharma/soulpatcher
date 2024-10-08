@@ -6,18 +6,15 @@ const getFilterData = unstable_cache(
   async () => {
     try {
       let authors = await getAllAuthors();
-      let tags = await getAllTags();
       authors = authors.sort((a, b) => a.name.localeCompare(b.name));
-      tags = tags.sort((a, b) => a.name.localeCompare(b.name));
       return {
         authors,
-        tags,
       };
     } catch (err) {
       console.log(err);
     }
   },
-  ['filter-cache'],
+  ['author-cache'],
   { revalidate: 184000 }
 );
 
@@ -29,7 +26,6 @@ export default async function Page() {
   }
   return (
     <div>
-      <Refinements list={result.tags} type='tags' />
       <Refinements list={result.authors} type='authors' />
     </div>
   );

@@ -1,0 +1,24 @@
+.container {
+  .title {
+    .link {
+      color: var(--main-primary-color);
+      position: relative; /* Position needed for ::after */
+      text-decoration: none;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -2px; /* Position the underline below the text */
+        left: 0;
+        background-color: var(--main-primary-color);
+        transition: width 0.3s ease; /* Animate the width */
+      }
+
+      &:hover::after {
+        width: 100%; /* Expand the underline on hover */
+      }
+    }
+  }
+}
